@@ -14,5 +14,5 @@ public interface ISubjectRepositoryPort {
 
   Optional<SubjectModel> update(SubjectModel subject);
 
-  SubjectModel deleteById(Long id);
+  Optional<SubjectModel> deleteById(Long id);
 }

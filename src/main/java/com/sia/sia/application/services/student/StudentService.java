@@ -54,7 +54,7 @@ public class StudentService
   }
 
   @Override
-  public StudentModel deleteStudent(Long id) {
+  public Optional<StudentModel> deleteStudent(Long id) {
     return deleteStudentUseCase.deleteStudent(id);
   }
 

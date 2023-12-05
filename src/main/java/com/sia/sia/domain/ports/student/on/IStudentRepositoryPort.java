@@ -14,5 +14,5 @@ public interface IStudentRepositoryPort {
 
   Optional<StudentModel> update(StudentModel student);
 
-  StudentModel deleteById(Long id);
+  Optional<StudentModel> deleteById(Long id);
 }

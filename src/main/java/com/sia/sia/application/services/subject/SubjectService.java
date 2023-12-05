@@ -54,7 +54,7 @@ public class SubjectService
   }
 
   @Override
-  public SubjectModel deleteSubject(Long id) {
+  public Optional<SubjectModel> deleteSubject(Long id) {
     return deleteSubjectUseCase.deleteSubject(id);
   }
 

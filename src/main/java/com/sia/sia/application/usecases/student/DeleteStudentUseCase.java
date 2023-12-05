@@ -1,5 +1,7 @@
 package com.sia.sia.application.usecases.student;
 
+import java.util.Optional;
+
 import com.sia.sia.domain.models.student.StudentModel;
 import com.sia.sia.domain.ports.student.in.IDeleteStudentUseCase;
 import com.sia.sia.domain.ports.student.on.IStudentRepositoryPort;
@@ -13,7 +15,7 @@ public class DeleteStudentUseCase implements IDeleteStudentUseCase {
   }
 
   @Override
-  public StudentModel deleteStudent(Long id) {
+  public Optional<StudentModel> deleteStudent(Long id) {
     return studentRepositoryPort.deleteById(id);
   }
 

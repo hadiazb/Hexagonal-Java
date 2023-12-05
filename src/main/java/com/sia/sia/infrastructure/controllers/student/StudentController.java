@@ -2,6 +2,8 @@ package com.sia.sia.infrastructure.controllers.student;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sia.sia.SiaApplication;
 import com.sia.sia.application.services.student.StudentService;
 import com.sia.sia.domain.models.student.StudentModel;
 
@@ -24,11 +27,9 @@ public class StudentController {
   @Autowired
   private StudentService studentService;
 
-  public StudentController(StudentService studentService) {
-    this.studentService = studentService;
-  }
+  private final Logger logger = LoggerFactory.getLogger(SiaApplication.class);
 
-  @GetMapping("")
+  @GetMapping({ "/", "" })
   public ResponseEntity<List<StudentModel>> findAll() {
     try {
       List<StudentModel> students = studentService.getAllStudents();
@@ -49,7 +50,7 @@ public class StudentController {
     }
   }
 
-  @PostMapping("")
+  @PostMapping({ "/", "" })
   public ResponseEntity<StudentModel> create(@RequestBody StudentModel student) {
     try {
       StudentModel newStudent = studentService.createStudent(student);
@@ -59,12 +60,12 @@ public class StudentController {
     }
   }
 
-  @PutMapping("")
+  @PutMapping({ "/", "" })
   public ResponseEntity<StudentModel> update(@RequestBody StudentModel student) {
     try {
       return studentService.updateStudent(student)
-          .map(newStudent -> new ResponseEntity<>(newStudent, HttpStatus.OK))
-          .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+          .map(newStudent -> new ResponseEntity<StudentModel>(newStudent, HttpStatus.OK))
+          .orElse(new ResponseEntity<StudentModel>(HttpStatus.NOT_FOUND));
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -73,8 +74,9 @@ public class StudentController {
   @DeleteMapping("/{id}")
   public ResponseEntity<StudentModel> delete(@PathVariable Long id) {
     try {
-      StudentModel student = studentService.deleteStudent(id);
-      return new ResponseEntity<StudentModel>(student, HttpStatus.OK);
+      return studentService.deleteStudent(id)
+          .map(student -> new ResponseEntity<StudentModel>(student, HttpStatus.OK))
+          .orElse(new ResponseEntity<StudentModel>(HttpStatus.NOT_FOUND));
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

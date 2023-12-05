@@ -50,14 +50,14 @@ public class SubjectRepositoryAdapter implements ISubjectRepositoryPort {
   }
 
   @Override
-  public SubjectModel deleteById(Long id) {
+  public Optional<SubjectModel> deleteById(Long id) {
     if (subjectRepository.existsById(id)) {
       SubjectModel subject = this.findById(id).get();
       subjectRepository.deleteById(id);
-      return subject;
+      return Optional.of(subject);
     }
 
-    return null;
+    return Optional.empty();
   }
 
 }

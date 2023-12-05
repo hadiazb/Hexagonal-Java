@@ -43,7 +43,6 @@ public class StudentEntity implements Serializable {
   private Long age;
   @Column(name = "sex")
   private String sex;
-
   @Column(name = "alive")
   private boolean alive;
 

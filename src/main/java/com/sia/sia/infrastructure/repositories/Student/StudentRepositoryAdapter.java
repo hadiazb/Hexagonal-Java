@@ -50,14 +50,14 @@ public class StudentRepositoryAdapter implements IStudentRepositoryPort {
   }
 
   @Override
-  public StudentModel deleteById(Long id) {
+  public Optional<StudentModel> deleteById(Long id) {
     if (studentRepository.existsById(id)) {
       StudentModel student = this.findById(id).get();
       studentRepository.deleteById(id);
-      return student;
+      return Optional.of(student);
     }
 
-    return null;
+    return Optional.empty();
   }
 
 }
